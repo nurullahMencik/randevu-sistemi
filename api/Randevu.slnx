@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Randevu.Api/Randevu.Api.csproj" />
+    <Project Path="src/Randevu.Application/Randevu.Application.csproj" />
+    <Project Path="src/Randevu.Domain/Randevu.Domain.csproj" />
+    <Project Path="src/Randevu.Infrastructure/Randevu.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Randevu.IntegrationTests/Randevu.IntegrationTests.csproj" />
+    <Project Path="tests/Randevu.UnitTests/Randevu.UnitTests.csproj" />
+  </Folder>
+</Solution>
