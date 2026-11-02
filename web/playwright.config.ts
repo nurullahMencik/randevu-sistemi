@@ -7,12 +7,14 @@ const API_PORT = 5305
 const WEB_PORT = 5304
 const isCI = Boolean(process.env.CI)
 
-// Every run starts the API on a brand-new SQLite file, so seeded data is predictable.
-// Files left over from earlier runs are removed first.
-for (const file of readdirSync(tmpdir()).filter((f) => f.startsWith('randevu-e2e-'))) {
+// Every run starts the API on a brand-new SQLite file, so seeded data is predictable. Worker
+// processes re-evaluate this config, so the path is shared through an environment variable and
+// only files from earlier runs are removed.
+process.env.RANDEVU_E2E_DB ??= join(tmpdir(), `randevu-e2e-${Date.now()}.db`)
+const database = process.env.RANDEVU_E2E_DB
+for (const file of readdirSync(tmpdir()).filter((f) => f.startsWith('randevu-e2e-') && !database.endsWith(f.replace(/-(shm|wal)$/, '')))) {
   rmSync(join(tmpdir(), file), { force: true })
 }
-const database = join(tmpdir(), `randevu-e2e-${Date.now()}.db`)
 
 export default defineConfig({
   testDir: './e2e',
