@@ -59,7 +59,9 @@ app.MapScalarApiReference("/scalar", options => options
     .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Curl)
     .HideDeveloperTools())
     .AllowAnonymous();
-app.MapGet("/", () => Results.Redirect("/scalar")).ExcludeFromDescription();
+// Visitors who open the API address land on the web app; the API reference stays at /scalar.
+var webAppUrl = app.Configuration["WebApp:Url"];
+app.MapGet("/", () => Results.Redirect(string.IsNullOrWhiteSpace(webAppUrl) ? "/scalar" : webAppUrl)).ExcludeFromDescription();
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {

@@ -16,8 +16,8 @@
 | | Adres |
 |---|---|
 | Web uygulaması | https://nurullahmencik.github.io/randevu-sistemi/ |
-| API dokümanı (Scalar) | https://randevu-api.onrender.com/scalar |
-| OpenAPI belgesi | https://randevu-api.onrender.com/openapi/v1.json |
+| API dokümanı (Scalar) | https://randevu-api-npqt.onrender.com/scalar |
+| OpenAPI belgesi | https://randevu-api-npqt.onrender.com/openapi/v1.json |
 
 > API, Render'ın ücretsiz katmanında çalışır ve bir süre istek gelmezse uyur. İlk açılışta web uygulaması `/health` uç noktasını yoklar; yanıt gecikirse **“Sunucu uyanıyor…”** ekranı ilerleme çubuğu ve otomatik yeniden deneme ile gösterilir (genellikle 30–60 sn).
 
