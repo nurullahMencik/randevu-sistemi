@@ -12,13 +12,12 @@ export function ThemeSwitch({ className }: { className?: string }) {
     { value: 'dark', label: t('theme.dark'), Icon: Moon },
   ]
   return (
-    <div role="radiogroup" aria-label={t('theme.label')} className={cn('inline-flex rounded-xl bg-surface-2 p-0.5', className)}>
+    <div role="group" aria-label={t('theme.label')} className={cn('inline-flex rounded-xl bg-surface-2 p-0.5', className)}>
       {options.map(({ value, label, Icon }) => (
         <button
           key={value}
           type="button"
-          role="radio"
-          aria-checked={preference === value}
+          aria-pressed={preference === value}
           aria-label={label}
           title={label}
           onClick={() => setPreference(value)}

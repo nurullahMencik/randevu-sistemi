@@ -1,5 +1,4 @@
-import '@fontsource-variable/inter/wght.css'
-import '@fontsource-variable/fraunces/wght.css'
+import './fonts.css'
 import './index.css'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'

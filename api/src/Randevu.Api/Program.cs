@@ -56,7 +56,8 @@ app.MapScalarApiReference("/scalar", options => options
     .WithTitle("Randevu API")
     .WithTheme(ScalarTheme.Kepler)
     .AddPreferredSecuritySchemes(OpenApiSetup.BearerScheme)
-    .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Curl))
+    .WithDefaultHttpClient(ScalarTarget.Shell, ScalarClient.Curl)
+    .HideDeveloperTools())
     .AllowAnonymous();
 app.MapGet("/", () => Results.Redirect("/scalar")).ExcludeFromDescription();
 
