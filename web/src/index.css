@@ -1,0 +1,162 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens. Warm paper + ink, with a brass accent used sparingly.
+ * Every text/background pair below meets WCAG AA (most meet AAA).
+ */
+:root {
+  --bg: #f6f3ee;
+  --surface: #fffdf9;
+  --surface-2: #f0ebe3;
+  --surface-3: #e7e0d5;
+  --border: #e2dace;
+  --border-strong: #cdc3b4;
+  --ink: #1c1a17;
+  --ink-2: #4d483f;
+  --muted: #655e53;
+  --accent: #1c1a17;
+  --accent-hover: #3a352e;
+  --accent-fg: #fffdf9;
+  --brand: #8a5a12;
+  --brand-soft: #f3e6cf;
+  --ring: #b0610f;
+  --success: #166534;
+  --success-soft: #e3f1e6;
+  --danger: #a61b1b;
+  --danger-soft: #f8e3e1;
+  --warning: #8a5a00;
+  --warning-soft: #f6ebcf;
+  --info-soft: #e4ecf7;
+  --chart-1: #2a78d6;
+  --chart-grid: #e6e0d6;
+  --chart-axis: #c3baab;
+  --shadow: 0 1px 2px rgb(28 26 23 / 0.05), 0 4px 16px -8px rgb(28 26 23 / 0.12);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #121110;
+  --surface: #1b1a17;
+  --surface-2: #24221e;
+  --surface-3: #2e2b26;
+  --border: #302d28;
+  --border-strong: #423d36;
+  --ink: #f2eee7;
+  --ink-2: #cfc8bc;
+  --muted: #a39b8e;
+  --accent: #f2eee7;
+  --accent-hover: #ddd6ca;
+  --accent-fg: #121110;
+  --brand: #e2a85a;
+  --brand-soft: #3a2c17;
+  --ring: #f0b35e;
+  --success: #6fcf8a;
+  --success-soft: #1d3324;
+  --danger: #f08b85;
+  --danger-soft: #3e1f1d;
+  --warning: #e7c063;
+  --warning-soft: #3a3016;
+  --info-soft: #1d2a3b;
+  --chart-1: #3987e5;
+  --chart-grid: #2c2a26;
+  --chart-axis: #4a453d;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 20px -10px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info-soft: var(--info-soft);
+  --shadow-card: var(--shadow);
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: var(--brand-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise 240ms ease-out both;
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atölye Kuaför &amp; Bakım — Online Randevu</title>
+    <meta
+      name="description"
+      content="Kadıköy'deki Atölye Kuaför & Bakım için online randevu: hizmet, uzman, gün ve saat seçin; randevunuz anında onaylansın."
+    />
+    <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Apply theme and language before first paint to avoid a flash of the wrong theme.
+      ;(function () {
+        try {
+          var t = localStorage.getItem('randevu.theme')
+          var dark = t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle('dark', dark)
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light'
+          var l = localStorage.getItem('randevu.lang')
+          if (l === 'en' || l === 'tr') document.documentElement.lang = l
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>Bu uygulama JavaScript gerektirir. / This app requires JavaScript.</noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
