@@ -1,3 +1,4 @@
+import { readdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { defineConfig, devices } from '@playwright/test'
@@ -7,6 +8,10 @@ const WEB_PORT = 5304
 const isCI = Boolean(process.env.CI)
 
 // Every run starts the API on a brand-new SQLite file, so seeded data is predictable.
+// Files left over from earlier runs are removed first.
+for (const file of readdirSync(tmpdir()).filter((f) => f.startsWith('randevu-e2e-'))) {
+  rmSync(join(tmpdir(), file), { force: true })
+}
 const database = join(tmpdir(), `randevu-e2e-${Date.now()}.db`)
 
 export default defineConfig({

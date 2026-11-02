@@ -41,9 +41,17 @@ export function TimeStep({ date, slots, loading, durationMinutes, days, selected
       </div>
 
       {loading ? (
-        <div className="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-5">
-          {Array.from({ length: 10 }, (_, i) => (
-            <Skeleton key={i} className="h-11" />
+        // Mirrors the loaded layout (three periods) so the page does not jump when slots arrive.
+        <div className="mt-5 flex min-h-[26rem] flex-col gap-6" aria-hidden>
+          {[0, 1, 2].map((group) => (
+            <div key={group}>
+              <Skeleton className="mb-2.5 h-3.5 w-24" />
+              <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-5">
+                {Array.from({ length: 7 }, (_, i) => (
+                  <Skeleton key={i} className="h-11" />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       ) : groups.length === 0 ? (
@@ -57,7 +65,7 @@ export function TimeStep({ date, slots, loading, durationMinutes, days, selected
           </EmptyState>
         </div>
       ) : (
-        <div className="mt-5 flex flex-col gap-6">
+        <div className="mt-5 flex min-h-[26rem] flex-col gap-6">
           {groups.map((group) => (
             <section key={group.period} aria-labelledby={`period-${group.period}`}>
               <h3 id={`period-${group.period}`} className="mb-2.5 text-xs font-semibold uppercase tracking-[0.1em] text-muted">

@@ -43,6 +43,7 @@ export function ServerWakeGate({ children }: { children: ReactNode }) {
       window.clearTimeout(retryTimer)
       try {
         const response = await fetch(`${API_URL}/health`, { cache: 'no-store', signal: AbortSignal.timeout(ATTEMPT_TIMEOUT_MS) })
+        await response.text() // Drain the body so the connection is released.
         if (response.ok && !cancelled) {
           window.clearTimeout(show)
           window.clearInterval(tick)
