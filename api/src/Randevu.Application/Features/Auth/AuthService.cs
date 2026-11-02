@@ -193,24 +193,14 @@ public sealed partial class AuthService(
 
     private async Task RevokeFamilyAsync(Guid familyId, DateTime now, string reason, CancellationToken ct)
     {
-        var family = await db.RefreshTokens.Where(t => t.FamilyId == familyId && t.RevokedAtUtc == null).ToListAsync(ct);
-        foreach (var token in family)
-        {
-            token.Revoke(now, reason);
-        }
-
-        try
-        {
-            await db.SaveChangesAsync(ct);
-        }
-        catch (ConcurrencyConflictException)
-        {
-            // Another request revoked (or rotated) a token in the meantime; try once more.
-            db.RefreshTokens.Local.Clear();
-            var remaining = await db.RefreshTokens.Where(t => t.FamilyId == familyId && t.RevokedAtUtc == null).ToListAsync(ct);
-            remaining.ForEach(t => t.Revoke(now, reason));
-            await db.SaveChangesAsync(ct);
-        }
+        // One set-based UPDATE revokes every still-active token of the family atomically.
+        // Concurrent calls (parallel replays, a logout racing a rotation) cannot conflict:
+        // a row that another request already revoked simply no longer matches the filter.
+        await db.RefreshTokens
+            .Where(t => t.FamilyId == familyId && t.RevokedAtUtc == null)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(t => t.RevokedAtUtc, now)
+                .SetProperty(t => t.RevokedReason, reason), ct);
     }
 
     private async Task<Guid?> GetStaffIdAsync(User user, CancellationToken ct) =>
