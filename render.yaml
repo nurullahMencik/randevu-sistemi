@@ -22,3 +22,43 @@ services:
       # The free plan has an ephemeral disk: every restart starts from freshly seeded demo data.
       - key: ConnectionStrings__Default
         value: Data Source=/app/App_Data/randevu.db
+
+  # Portföydeki diğer projelerin sunucuları da bu Blueprint'ten yönetilir (Render, Blueprint
+  # dosyasındaki değişiklikleri otomatik uygular). `repo` alanı servisi kendi reposundan derler.
+  - type: web
+    name: pano-server
+    runtime: docker
+    plan: free
+    region: frankfurt
+    repo: https://github.com/nurullahMencik/pano-whiteboard
+    branch: main
+    dockerfilePath: ./server/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: TRUST_PROXY
+        value: "true"
+      - key: ALLOWED_ORIGINS
+        value: https://nurullahmencik.github.io
+      - key: LOG_LEVEL
+        value: info
+      - key: DB_PATH
+        value: /data/pano.db
+
+  - type: web
+    name: carsi-eticaret
+    runtime: docker
+    plan: free
+    region: frankfurt
+    repo: https://github.com/nurullahMencik/carsi-eticaret
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: DEMO_LOGIN_ENABLED
+        value: "true"
